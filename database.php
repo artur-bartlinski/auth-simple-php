@@ -5,13 +5,13 @@
     function dbConnect()
     {
         //You must use your details here in order to connect to database
-        $connection = mysqli_connect("hostname", "username", "password", "dbname") or exit("Couldn't connect to database");
+        $connection = mysqli_connect("localhost", "username", "password", "dbname") or exit("Couldn't connect to database");
         return $connection;
     }
 
-    function selectUser($connection, $username)
+    function selectUser($connection, $column, $condition, $value)
     {
-        $query = mysqli_query($connection, "select * from users where username='$username'");
+        $query = mysqli_query($connection, "select $column from users where $condition='$value'");
         return $query;
     }
     
@@ -52,7 +52,7 @@
     
     function activateUserAccount($connection, $random)
     {
-        $query = mysqli_query($connection, "select * from users where random=$random");
+        $query = selectUser($connection, 'activated', 'random', $random);
         $result = mysqli_num_rows($query);
             
         if ($result === 1) {

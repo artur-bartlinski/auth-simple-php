@@ -3,6 +3,12 @@ include 'database.php';
 
 if (isLoggedIn()) {
     
+    if (isset($_SESSION['username'])) {
+        $user = $_SESSION['username'];
+    } else {
+        $user = filter_input(INPUT_COOKIE, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
+    }
+    
     $submit = filter_input(INPUT_POST, 'submit', FILTER_SANITIZE_SPECIAL_CHARS);
     
     if ($submit) {
@@ -12,7 +18,7 @@ if (isLoggedIn()) {
         $repeatnewpass = filter_input(INPUT_POST, 'repeatnewpass', FILTER_SANITIZE_SPECIAL_CHARS);
         
         $connect = dbConnect();
-        $query = selectUser($connect, $user);
+        $query = selectUser($connect, 'password', 'username', $user);
         $row = mysqli_fetch_assoc($query);
         
         $oldpassdb = $row['password'];

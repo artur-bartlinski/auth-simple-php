@@ -16,7 +16,7 @@
         } else {
         
             $connect = dbConnect();
-            $query = selectUser($connect, $username);
+            $query = selectUser($connect, '*', 'username', $username);
 
 
             $numrows = mysqli_num_rows($query);

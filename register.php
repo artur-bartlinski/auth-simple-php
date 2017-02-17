@@ -21,7 +21,7 @@
     if ($submit) {
         
         $connect = dbConnect();
-        $namecheck = selectUser($connect, $username);
+        $namecheck = selectUser($connect, 'username', 'username', $username);
         $count = mysqli_num_rows($namecheck);
         
         if ($count) {
@@ -60,7 +60,7 @@
 
 
 <html>
-    <form action="register.php" method="post">
+    <form action="register.php" method="post" name="form">
         <table>
             <tr>
                 <td>Your full name: </td>
@@ -68,7 +68,8 @@
             </tr>
             <tr>
                 <td>Choose a username: </td>
-                <td><input type="text" name="username" value="<?php echo $username ?>"></td>
+                <td><input type="text" id="user-input" name="username" value="<?php echo $username ?>" onkeyup="checkUsername()"></td>
+                <td><div id="checkUsername"></div></td>
             </tr>
             <tr>
                 <td>Choose a password: </td>
@@ -85,6 +86,17 @@
         </table>
         <p><input type="submit" name="submit" value="Register"></p>
     </form>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script>             
+        function checkUsername() {
+            $.post('data.php', {name: form.username.value},
+                function(output) {
+                    $('#checkUsername').html(output).show();
+                });
+        }                     
+    </script>
     
     
 </html>
