@@ -1,5 +1,7 @@
 <?php
     
+    session_start();
+
     function dbConnect()
     {
         //You must use your details here in order to connect to database
@@ -50,16 +52,33 @@
     
     function activateUserAccount($connection, $random)
     {
-        $query = mysqli_query($connection, "select * from users where random=$random and activated='1'");
+        $query = mysqli_query($connection, "select * from users where random=$random");
         $result = mysqli_num_rows($query);
             
-        if ($result === 0) {
-            $query = mysqli_query($connection, "update users set activated='1' where random='$random' ");
-            echo "Your account is now active! You can <a href='index.php'>log in</a>.";
+        if ($result === 1) {
+            
+            $row = mysqli_fetch_assoc($query);
+            $activated = $row['activated'];
+            
+            if ($activated == "1") {
+                exit("Your account has been activated! You can <a href='index.php'>log in</a>.");
+            } elseif ($activated == "0") {
+                $query = mysqli_query($connection, "update users set activated='1' where random='$random' ");
+                echo "Your account is now active! You can <a href='index.php'>log in</a>.";
+            }
         } else {
-           exit("You have already activated your account!!");
+            exit("Data is not present or is wrong!");
         }
         
+    }
+    
+    function isLoggedIn()
+    {
+        $cookie = filter_input(INPUT_COOKIE, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
+        if (isset($_SESSION['username']) || isset($cookie)) {
+            $loggedin = TRUE;
+            return $loggedin;
+        }
     }
 
     

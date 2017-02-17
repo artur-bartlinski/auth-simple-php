@@ -1,3 +1,14 @@
+<?php
+
+include 'database.php';
+
+if (isLoggedIn()) {
+    header("Location: member.php");
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,7 +20,8 @@
         <form action="login.php" method="post">
             Username: <input type="text" name="username"><br>
             Password: <input type="password" name="password"><br>
-            <input type="submit" value="Log in">
+            <input type="checkbox" name="rememberme"> Remember me<br>
+            <input type="submit" name="login" value="Log in">
         </form>
         <p>
             <a href="register.php">Register</a>

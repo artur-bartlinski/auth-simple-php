@@ -9,5 +9,5 @@ if ($random) {
     activateUserAccount($connect, $random);   
     
 } else {
-    exit("Data missing!");
+    exit("Data is not present or is wrong!!");
 }

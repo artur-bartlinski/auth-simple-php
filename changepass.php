@@ -1,12 +1,7 @@
 <?php
-
-session_start();
-
 include 'database.php';
 
-$user = $_SESSION['username'];
-
-if ($user) {
+if (isLoggedIn()) {
     
     $submit = filter_input(INPUT_POST, 'submit', FILTER_SANITIZE_SPECIAL_CHARS);
     
@@ -32,6 +27,8 @@ if ($user) {
                     
                     $_SESSION = array();        
                     session_destroy();
+                    
+                    setcookie("username", "" ,time()-7200);
                     
                     echo "You have updated your password successfully!"
                         . " Click to <a href='index.php'>log in</a> with new password."; 

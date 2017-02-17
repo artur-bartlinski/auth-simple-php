@@ -1,6 +1,10 @@
 <?php
 
-    include_once 'database.php';
+    include 'database.php';
+    
+    if (isLoggedIn()) {
+        header("Location: member.php");
+    }
 
     echo "<h1>Register</h1>";
     
