@@ -1,0 +1,40 @@
+<h3>Register</h3>
+<form action="register.php" method="post" name="form">
+    <table>
+        <tr>
+            <td>Your full name: </td>
+            <td><input type="text" name="fullname" value="<?php echo $fullname ?>"></td>
+        </tr>
+        <tr>
+            <td>Choose a username: </td>
+            <td><input type="text" id="user-input" name="username" value="<?php echo $username ?>"
+                       onkeyup="checkUsername()"></td>
+            <td><div id="checkUsername"></div></td>
+        </tr>
+        <tr>
+            <td>Choose a password: </td>
+            <td><input type="password" name="password"></td>
+        </tr>
+        <tr>
+            <td>Repeat a password: </td>
+            <td><input type="password" name="repeat_passwd"></td>
+        </tr>
+        <tr>
+            <td>E-mail address: </td>
+            <td><input type="email" name="email" value="<?php echo $email ?>"></td>
+        </tr>
+    </table>
+    <p><input type="submit" name="submit" value="Register"></p>
+
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+    function checkUsername() {
+        $.post('data.php', {name: form.username.value},
+            function(output) {
+                $('#checkUsername').html(output).show();
+            });
+    }
+</script>
